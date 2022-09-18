@@ -79,7 +79,7 @@ public final class PanelTilingDraw extends JPanel
       drawTiling(
             new ITileDrawing() {
                @Override
-               public void drawPolygon(int[] x, int[] y, int numPoints, int colour) {
+               public void drawPolygon(double[] x, double[] y, int numPoints, int colour) {
                   // <polygon class="tile ih1" points="200,10 250,190 160,210" />
                   sb.append("<polygon class=\"");
                   if(colour>0) sb.append("tile ih"+colour);
@@ -114,14 +114,20 @@ public final class PanelTilingDraw extends JPanel
       drawTiling(
             new ITileDrawing() {
                @Override
-               public void drawPolygon(int[] x, int[] y, int numPoints, int colour) {
+               public void drawPolygon(double[] x, double[] y, int numPoints, int colour) {
+                  int[] x_int = new int[x.length];
+                  int[] y_int = new int[y.length];
+                  for( int i = 0; i<x.length; i++){
+                      x_int[i] = (int)x[i];
+                      y_int[i] = (int)y[i];
+                  }
                   if( fill || colour==0 ) {
                      g.setColor(colors[colour]);
-                     g.fillPolygon(x, y, numPoints);
+                     g.fillPolygon(x_int, y_int, numPoints);
                   }
                   if( colour>0 ) {
                      g.setColor(Color.BLACK);
-                     g.drawPolygon(x, y, numPoints);
+                     g.drawPolygon(x_int, y_int, numPoints);
                   }
                }
             },
@@ -129,7 +135,7 @@ public final class PanelTilingDraw extends JPanel
    }   
    
    interface ITileDrawing {
-      public void drawPolygon(int[] x, int[]y, int numPoints, int colour);
+      public void drawPolygon(double[] x, double[]y, int numPoints, int colour);
    }
    
    private void drawTiling(ITileDrawing g, int w, int h) {
@@ -201,14 +207,14 @@ public final class PanelTilingDraw extends JPanel
    private void drawTileSetNew( ITileDrawing g, int vx, int vy, int ox, int oy, double scale ){
       double ovx = vx * offsets[0] + vy * offsets[2];
       double ovy = vx * offsets[1] + vy * offsets[3];
-      int[] x = new int[9];
-      int[] y = new int[9];
+      double[] x = new double[9];
+      double[] y = new double[9];
       for( ITile t : tiles){
          int ix = 0;
          for( int i=0; i<t.size();  i++){
             if( labels[i]>=0 ){
-               x[ix] = ox+(int)((t.getX(i)+ovx)*scale);
-               y[ix] = oy-(int)((t.getY(i)+ovy)*scale);
+               x[ix] = ox+((t.getX(i)+ovx)*scale);
+               y[ix] = oy-((t.getY(i)+ovy)*scale);
                ix++;
             }
          }
@@ -217,18 +223,18 @@ public final class PanelTilingDraw extends JPanel
    }
 
    private void drawUnitParallelogramNew( ITileDrawing g, int ox, int oy, double scale ){
-      final int[] pgramx = new int[4];
-      final int[] pgramy = new int[4];
+      final double[] pgramx = new double[4];
+      final double[] pgramy = new double[4];
       double dx = (-offsets[0]-offsets[2])/2;
       double dy = (-offsets[1]-offsets[3])/2;
-      pgramx[0]= ox+(int)(dx*scale);
-      pgramy[0]= oy-(int)(dy*scale);
-      pgramx[1]= ox+(int)((offsets[0]+dx)*scale);
-      pgramy[1]= oy-(int)((offsets[1]+dy)*scale);
-      pgramx[3]= ox+(int)((offsets[2]+dx)*scale);
-      pgramy[3]= oy-(int)((offsets[3]+dy)*scale);
-      pgramx[2]= ox+(int)((offsets[0]+offsets[2]+dx)*scale);
-      pgramy[2]= oy-(int)((offsets[1]+offsets[3]+dy)*scale);
+      pgramx[0]= ox+(dx*scale);
+      pgramy[0]= oy-(dy*scale);
+      pgramx[1]= ox+((offsets[0]+dx)*scale);
+      pgramy[1]= oy-((offsets[1]+dy)*scale);
+      pgramx[3]= ox+((offsets[2]+dx)*scale);
+      pgramy[3]= oy-((offsets[3]+dy)*scale);
+      pgramx[2]= ox+((offsets[0]+offsets[2]+dx)*scale);
+      pgramy[2]= oy-((offsets[1]+offsets[3]+dy)*scale);
       g.drawPolygon(pgramx, pgramy, 4, 0);
    }
 

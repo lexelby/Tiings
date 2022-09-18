@@ -1,0 +1,14 @@
+Size of smallest
+rotation                      Has reflection?
+                        Yes                     No
+360° / 6                p6m                     p6
+360° / 4      Has mirrors at 45°?               p4
+               Yes: p4m          No: p4g
+360° / 3    Has rot. centre off mirrors?        p3
+               Yes: p31m         No: p3m1
+360° / 2    Has perpendicular reflections?      Has glide reflection?
+               Yes               No:pmg
+            Has rot. centre off mirrors?        Yes: pgg    No: p2
+               Yes: cmm          No: pmm
+none        Has glide axis off mirrors?         Has glide reflection?
+               Yes: cm           No: pm         Yes: pg     No: p1

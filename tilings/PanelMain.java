@@ -26,7 +26,7 @@ public final class PanelMain
 	implements IUpdateListener, MouseListener
 {
    private int[] m_version = new int[]{1,7};
-   private String copyrightText = " Tilings v"+m_version[0]+"."+m_version[1]+", Written by Jaap Scherphuis, © 2009-2020";
+   private String copyrightText = " Tilings v"+m_version[0]+"."+m_version[1]+", Written by Jaap Scherphuis, (c) 2009-2020";
    private String homeUrl = "https://www.jaapsch.net/tilings/"; 
    private String downloadUrl = homeUrl+"applet.htm";
    private String versionUrl = homeUrl+"version.txt";
